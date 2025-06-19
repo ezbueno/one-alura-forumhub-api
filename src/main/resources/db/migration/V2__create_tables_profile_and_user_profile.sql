@@ -1,28 +1,12 @@
-CREATE TABLE `user` (
+CREATE TABLE profile (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE course (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    category VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE topic (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(20) NOT NULL DEFAULT 'OPEN',
-    author_id BIGINT,
-    course_id BIGINT,
-    CONSTRAINT fk_topic_author
-        FOREIGN KEY (author_id) REFERENCES `user`(id)
-        ON DELETE SET NULL,
-    CONSTRAINT fk_topic_course
-        FOREIGN KEY (course_id) REFERENCES course(id)
-        ON DELETE SET NULL
+CREATE TABLE user_profile (
+    user_id BIGINT NOT NULL,
+    profile_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, profile_id),
+    CONSTRAINT fk_userprofile_user FOREIGN KEY (user_id) REFERENCES `user`(id),
+    CONSTRAINT fk_userprofile_profile FOREIGN KEY (profile_id) REFERENCES profile(id)
 );
