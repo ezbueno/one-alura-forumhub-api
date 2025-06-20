@@ -1,0 +1,1 @@
+INSERT IGNORE INTO profile (name) VALUES ('USER');

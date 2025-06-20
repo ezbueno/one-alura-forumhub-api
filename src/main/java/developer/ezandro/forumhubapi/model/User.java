@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -14,7 +18,7 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @Table(name = "user")
 @Entity
-public class User {
+public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,4 +39,34 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "profile_id")
     )
     private Set<Profile> profiles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.profiles;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

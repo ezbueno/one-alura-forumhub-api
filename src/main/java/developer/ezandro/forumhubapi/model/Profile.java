@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
@@ -12,11 +15,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 @Table(name = "profile")
 @Entity
-public class Profile {
+public class Profile implements GrantedAuthority, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return this.name;
+    }
 }
