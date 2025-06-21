@@ -25,8 +25,7 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withExpiresAt(this.expirationDate())
                     .sign(algorithm);
-        } catch (
-                JWTCreationException exception) {
+        } catch (JWTCreationException exception) {
             throw new JWTCreationException("Error generating JWT token!", exception);
         }
     }
@@ -39,8 +38,7 @@ public class TokenService {
                     .build()
                     .verify(tokenJWT)
                     .getSubject();
-        } catch (
-                JWTVerificationException exception) {
+        } catch (JWTVerificationException exception) {
             throw new JWTVerificationException("Invalid or expired JWT token!", exception);
         }
     }
