@@ -22,4 +22,8 @@ public class Course {
 
     @Column(nullable = false)
     private String category;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
@@ -43,4 +44,10 @@ public class Topic {
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
     private List<Response> responses;
+
+    public void update(String title, String message, TopicStatus status) {
+        Optional.ofNullable(title).ifPresent(t -> this.title = t);
+        Optional.ofNullable(message).ifPresent(m -> this.message = m);
+        Optional.ofNullable(status).ifPresent(s -> this.status = s);
+    }
 }

@@ -1,4 +1,9 @@
 package developer.ezandro.forumhubapi.dto;
 
-public record TopicUpdateRequestDTO() {
+import developer.ezandro.forumhubapi.model.TopicStatus;
+
+public record TopicUpdateRequestDTO(
+        String title,
+        String message,
+        TopicStatus status) {
 }
