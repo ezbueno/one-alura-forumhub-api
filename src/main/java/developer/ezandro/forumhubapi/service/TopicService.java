@@ -13,7 +13,6 @@ import developer.ezandro.forumhubapi.model.User;
 import developer.ezandro.forumhubapi.repository.CourseRepository;
 import developer.ezandro.forumhubapi.repository.TopicRepository;
 import developer.ezandro.forumhubapi.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -60,17 +58,21 @@ public class TopicService {
     }
 
     public TopicResponseDTO getTopicDetails(Long id) {
-        Topic topic = this.topicRepository.findById(id)
-                .orElseThrow(() -> new TopicNotFoundException("Topic not found with ID: " + id));
+        Topic topic = this.getTopic(id);
         return new TopicResponseDTO(topic);
     }
 
     @Transactional
     public TopicResponseDTO updateTopic(Long id, TopicUpdateRequestDTO updateDTO) {
-        Topic topic = this.topicRepository.findById(id)
-                .orElseThrow(() -> new TopicNotFoundException("Topic not found with ID: " + id));
+        Topic topic = this.getTopic(id);
         topic.update(updateDTO.title(), updateDTO.message(), updateDTO.status());
         return new TopicResponseDTO(topic);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Topic topic = this.getTopic(id);
+        this.topicRepository.deleteById(topic.getId());
     }
 
     private TopicResponseDTO toDTO(Topic topic) {
@@ -83,5 +85,10 @@ public class TopicService {
                 topic.getAuthor().getName(),
                 topic.getCourse().getName()
         );
+    }
+
+    private Topic getTopic(Long id) {
+        return this.topicRepository.findById(id)
+                .orElseThrow(() -> new TopicNotFoundException("Topic not found with ID: " + id));
     }
 }

@@ -56,4 +56,10 @@ public class TopicController {
         TopicResponseDTO updated = this.topicService.updateTopic(id, updateDTO);
         return ResponseEntity.ok(updated);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteTopic(@PathVariable(value = "id") Long id) {
+        this.topicService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
