@@ -35,7 +35,7 @@ public class UserService {
         String hashedPassword = this.passwordEncoder.encode(dto.password());
 
         User user = new User(null, dto.name(), dto.email(), hashedPassword, profiles);
-        this.userRepository.save(user);
-        return new UserResponseDTO(user.getId(), user.getName(), user.getEmail());
+        User savedUser = this.userRepository.save(user);
+        return new UserResponseDTO(savedUser.getId(), savedUser.getName(), savedUser.getEmail());
     }
 }

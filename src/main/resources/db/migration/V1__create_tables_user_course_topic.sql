@@ -1,4 +1,4 @@
-CREATE TABLE `user` (
+CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -20,7 +20,7 @@ CREATE TABLE topic (
     author_id BIGINT,
     course_id BIGINT,
     CONSTRAINT fk_topic_author
-        FOREIGN KEY (author_id) REFERENCES `user`(id)
+        FOREIGN KEY (author_id) REFERENCES users(id)
         ON DELETE SET NULL,
     CONSTRAINT fk_topic_course
         FOREIGN KEY (course_id) REFERENCES course(id)

@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 public class User implements UserDetails, Serializable {
     @Id
