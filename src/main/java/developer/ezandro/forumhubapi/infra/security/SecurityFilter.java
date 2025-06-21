@@ -28,8 +28,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         String method = request.getMethod();
 
-        if ((path.equals("/users") && method.equals("POST")) ||
-                (path.equals("/courses") && method.equals("POST"))) {
+        if ((path.equals("/users") && method.equals("POST"))) {
             filterChain.doFilter(request, response);
             return;
         }

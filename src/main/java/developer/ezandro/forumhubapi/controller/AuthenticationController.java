@@ -6,7 +6,6 @@ import developer.ezandro.forumhubapi.infra.security.TokenService;
 import developer.ezandro.forumhubapi.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +33,6 @@ public class AuthenticationController {
         User user = (User) authentication.getPrincipal();
         String token = this.tokenService.generateJwtToken(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthenticationResponseDTO(token));
+        return ResponseEntity.ok(new AuthenticationResponseDTO(token));
     }
 }
